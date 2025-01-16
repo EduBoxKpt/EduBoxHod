@@ -88,8 +88,8 @@ const Contact = () => {
 
       <div className="contact-info">
         <h2>Contact Information</h2>
-        <p>Email: pratyushkpt.com</p>
-        <p>Phone: +91 8310846925</p>
+        <p>Email: EduBox@gmail.com</p>
+        <p>Phone: 1234567890</p>
         <p>Address: Mangaluru, Karnataka, India</p>
       </div>
     </div>
