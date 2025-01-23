@@ -13,6 +13,12 @@ const NotesAdmin = () => {
   const [isDataFetched, setIsDataFetched] = useState(false); // Subject fetch status
   const [dropdownVisible, setDropdownVisible] = useState(false); // Dropdown visibility
   const [isAddSubjectVisible, setIsAddSubjectVisible] = useState(false); // Controls visibility of Add Subject form
+  const [selectedFile, setSelectedFile] = useState(null); // To store the selected file
+  const [isPdfUploaded, setIsPdfUploaded] = useState(false); // To track if the PDF is uploaded
+  const [isUploading, setIsUploading] = useState(false); // Track if the PDF upload is in progress
+
+
+
 
 
   const baseUrl = process.env.REACT_APP_BASE_URL;
@@ -38,10 +44,10 @@ const NotesAdmin = () => {
     { email: "ch@college.com", password: "ch123", branch: "CH" },
     { email: "me@college.com", password: "me123", branch: "ME" },
     { email: "po@college.com", password: "po123", branch: "PO" },
-    { email: "pratyush@gmail.com", password: "pratyush"} // Add branch for Pratyush
+    { email: "pratyush@gmail.com", password: "pratyush" } // Add branch for Pratyush
   ];
 
-  
+
   const handleLogin = (e) => {
     e.preventDefault();
     const hod = hodCredentials.find(
@@ -53,7 +59,7 @@ const NotesAdmin = () => {
       window.location.href = "/notes/login";  // Redirect to /questionpaper/login
       return;  // Prevent further logic execution if redirected
     }
-    
+
     if (hod) {
       setIsLoggedIn(true);
       setErrorMessage("");
@@ -133,7 +139,46 @@ const NotesAdmin = () => {
     }
   };
 
+  const handlePdfUpload = async (e) => {
+    const fileInput = e.target;
+    const file = e.target.files[0];
+    if (file) {
+      setSelectedFile(file); // Save the file in the state
+      setIsUploading(true); 
+      setIsPdfUploaded(false); // Reset upload status
+      const formData = new FormData();
+      formData.append('file', file);
+
+      try {
+        const response = await axios.post(`${baseUrl}/api/uploadPdf`, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+        fileInput.value = ''; // Log the response to see if PDF is uploaded successfully
+
+        setPdfLink(response.data.pdfLink); // Save the PDF link
+        setIsPdfUploaded(true); // Mark as successfully uploaded
+      } catch (error) {
+        console.error("Error uploading PDF:", error);
+        setErrorMessage("Failed to upload PDF. Please try again.");
+        fileInput.value = '';
+      }
+      finally{
+        setIsUploading(false); 
+      }
+    }
+  };
+
+
+
+
   const addUnit = async () => {
+    if (!isPdfUploaded) {
+      setErrorMessage("Please upload the PDF before adding a unit.");
+      return;
+    }
+
     try {
       const unitData = {
         branch: newSubject.branch,
@@ -145,15 +190,20 @@ const NotesAdmin = () => {
       };
       const response = await axios.post(`${baseUrl}/api/unit`, unitData);
       setModules([...modules, response.data]); // Update modules state with newly added unit
+
+      // Clear inputs and state
       setModuleNo("");
       setModuleName("");
       setPdfLink("");
+      setSelectedFile(null); // Clear the selected file
+      setIsPdfUploaded(false); // Reset upload status
       setErrorMessage(""); // Clear error
     } catch (error) {
       console.error("Error adding unit:", error);
       setErrorMessage("Failed to add unit. Please try again.");
     }
   };
+
 
   const handleMoreClick = (subject) => {
     if (selectedSubject === subject) {
@@ -318,15 +368,22 @@ const NotesAdmin = () => {
                               onChange={(e) => setModuleName(e.target.value)}
                             />
                             <input
-                              type="text"
-                              placeholder="PDF Link"
-                              value={pdfLink}
-                              onChange={(e) => setPdfLink(e.target.value)}
+                              type="file"
+                              accept="application/pdf"
+                              onChange={handlePdfUpload} // Use handlePdfUpload here
+                              required
                             />
-                            <button onClick={addUnit} className="add-unit-btn">
-                              Add Unit
+                            {selectedFile && <p>Selected File: {selectedFile.name}</p>} {/* Display file name */}
+                            <button
+                              onClick={addUnit}
+                              className="add-unit-btn"
+                              disabled={!isPdfUploaded || !moduleNo || !moduleName || isUploading} // Disable if PDF not uploaded or fields are empty
+                            >
+                             {isUploading ? "Uploading..." : "Add Unit"}
                             </button>
+                            {errorMessage && <p className="error-message">{errorMessage}</p>} {/* Show error message */}
                           </div>
+
                         </div>
                       )}
                     </li>

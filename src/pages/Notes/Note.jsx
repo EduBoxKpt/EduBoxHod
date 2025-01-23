@@ -12,10 +12,12 @@ const Note = () => {
   const [errorMessage, setErrorMessage] = useState(""); // Error message
   const [isDataFetched, setIsDataFetched] = useState(false); // Subject fetch status
   const [dropdownVisible, setDropdownVisible] = useState(false); // Dropdown visibility
+  const baseUrl = process.env.REACT_APP_BASE_URL;
+
 
   const fetchSubjects = async () => {
     try {
-      const response = await axios.get("https://edu-box-backend.onrender.com/api/subjects", {
+      const response = await axios.get(`${baseUrl}/api/subjects`, {
         params: { branch, semester },
       });
       setSubjects(response.data);
@@ -29,7 +31,7 @@ const Note = () => {
 
   const fetchModules = async (subjectName) => {
     try {
-      const response = await axios.get("https://edu-box-backend.onrender.com/api/unit", {
+      const response = await axios.get(`${baseUrl}/api/unit`, {
         params: { branch, semester, subject: subjectName },
       });
       setModules(response.data);
