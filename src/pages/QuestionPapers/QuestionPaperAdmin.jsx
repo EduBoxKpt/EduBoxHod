@@ -229,7 +229,7 @@ const QuestionPaperAdmin = () => {
       <div className="qp-unique-selection-section">
         <h2 className="qp-unique-title">Select Year</h2>
         <div className="qp-unique-buttons">
-          {["2023", "2024"].map((yr) => (
+          {["2024"].map((yr) => (
             <button
               key={yr}
               onClick={() => setYear(yr)}
