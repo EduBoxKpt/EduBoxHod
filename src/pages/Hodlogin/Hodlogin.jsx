@@ -35,7 +35,7 @@ const Hodlogin = ({ setIsHodLoggedIn }) => {
         alert("Invalid Credentials");
       }
     } catch (error) {
-      alert("Error during login: " + (error.response?.data?.message || error.message));
+      alert("Invalid Username or Password");
     }
   };
 
