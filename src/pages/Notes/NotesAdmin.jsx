@@ -1,10 +1,11 @@
-import React, { useState } from "react";
 import axios from "axios";
 import "./NotesAdmin.css";
+import React, { useState, useEffect } from "react";
+
 
 const NotesAdmin = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // Track login status
-  const [loginDetails, setLoginDetails] = useState({ email: "", password: "" });
+  // const [isLoggedIn, setIsLoggedIn] = useState(false); // Track login status
+  // const [loginDetails, setLoginDetails] = useState({ email: "", password: "" });
   const [errorMessage, setErrorMessage] = useState(""); // Error message
   const [semester, setSemester] = useState(""); // Semester state
   const [subjects, setSubjects] = useState([]); // Fetched subjects
@@ -35,64 +36,76 @@ const NotesAdmin = () => {
     subject: ""
   });
 
-  const hodCredentials = [
-    { email: "cs@college.com", password: "cs123", branch: "CS" },
-    { email: "ec@college.com", password: "ec123", branch: "EC" },
-    { email: "eee@college.com", password: "eee123", branch: "EEE" },
-    { email: "ce@college.com", password: "ce123", branch: "CE" },
-    { email: "at@college.com", password: "at123", branch: "AT" },
-    { email: "ch@college.com", password: "ch123", branch: "CH" },
-    { email: "me@college.com", password: "me123", branch: "ME" },
-    { email: "po@college.com", password: "po123", branch: "PO" },
-    { email: "pratyush@gmail.com", password: "pratyush" } // Add branch for Pratyush
-  ];
+  const [hodBranch, setHodBranch] = useState("");
+
+useEffect(() => {
+  const branch = localStorage.getItem("hodBranch");
+  if (branch) {
+    setHodBranch(branch);
+    setNewSubject((prev) => ({ ...prev, branch }));
+  }
+}, []);
 
 
-  const handleLogin = (e) => {
-    e.preventDefault();
-    const hod = hodCredentials.find(
-      (cred) =>
-        cred.email === loginDetails.email && cred.password === loginDetails.password
-    );
+  // const hodCredentials = [
+  //   { email: "cs@college.com", password: "cs123", branch: "CS" },
+  //   { email: "ec@college.com", password: "ec123", branch: "EC" },
+  //   { email: "eee@college.com", password: "eee123", branch: "EEE" },
+  //   { email: "ce@college.com", password: "ce123", branch: "CE" },
+  //   { email: "at@college.com", password: "at123", branch: "AT" },
+  //   { email: "ch@college.com", password: "ch123", branch: "CH" },
+  //   { email: "me@college.com", password: "me123", branch: "ME" },
+  //   { email: "po@college.com", password: "po123", branch: "PO" },
+  //   { email: "pratyush@gmail.com", password: "pratyush" } // Add branch for Pratyush
+  // ];
 
-    if (loginDetails.email === "pratyush@gmail.com") {
-      window.location.href = "/notes/login";  // Redirect to /questionpaper/login
-      return;  // Prevent further logic execution if redirected
-    }
 
-    if (hod) {
-      setIsLoggedIn(true);
-      setErrorMessage("");
-      setNewSubject({ ...newSubject, branch: hod.branch }); // Set branch from the logged-in user
-    } else {
-      setErrorMessage("Invalid email or password. Please try again.");
-    }
-  };
+  // const handleLogin = (e) => {
+  //   e.preventDefault();
+  //   const hod = hodCredentials.find(
+  //     (cred) =>
+  //       cred.email === loginDetails.email && cred.password === loginDetails.password
+  //   );
 
-  const handleLogout = () => {
-    setIsLoggedIn(false);
-    setLoginDetails({ email: "", password: "" });
-    setSemester("");
-    setSubjects([]);
-    setModules([]);
-    setIsDataFetched(false);
-    setErrorMessage("");
-  };
+  //   if (loginDetails.email === "pratyush@gmail.com") {
+  //     window.location.href = "/notes/login";  // Redirect to /questionpaper/login
+  //     return;  // Prevent further logic execution if redirected
+  //   }
+
+  //   if (hod) {
+  //     setIsLoggedIn(true);
+  //     setErrorMessage("");
+  //     setNewSubject({ ...newSubject, branch: hod.branch }); // Set branch from the logged-in user
+  //   } else {
+  //     setErrorMessage("Invalid email or password. Please try again.");
+  //   }
+  // };
+
+  // const handleLogout = () => {
+  //   setIsLoggedIn(false);
+  //   setLoginDetails({ email: "", password: "" });
+  //   setSemester("");
+  //   setSubjects([]);
+  //   setModules([]);
+  //   setIsDataFetched(false);
+  //   setErrorMessage("");
+  // };
 
   // Fetch subjects based on branch and semester
   const fetchSubjects = async () => {
     try {
       const response = await axios.get(`${baseUrl}/api/subjects`, {
-        params: { branch: newSubject.branch, semester },
+        params: { branch: hodBranch, semester },
       });
-      setSubjects(response.data); // Update subjects
-      setIsDataFetched(true); // Set fetched flag
-      setErrorMessage(""); // Clear error
+      setSubjects(response.data);
+      setIsDataFetched(true);
+      setErrorMessage("");
     } catch (error) {
       console.error("Error fetching subjects:", error);
       setErrorMessage("Failed to fetch subjects. Please try again.");
     }
   };
+  
 
   const fetchModules = async (subjectName) => {
     try {
@@ -107,15 +120,16 @@ const NotesAdmin = () => {
     }
   };
 
+
   const handleShowSubjects = () => {
     if (!semester) {
-      setErrorMessage("Please select Semester to continue.");
-      setIsDataFetched(false);
-    } else {
-      fetchSubjects();
-      setIsAddSubjectVisible(true); // Show Add Subject form after subjects are fetched
+      setErrorMessage("Please select a semester to continue.");
+      return;
     }
+    fetchSubjects();
+    setIsAddSubjectVisible(true);
   };
+  
 
   const deleteSubject = async (subjectId) => {
     try {
@@ -217,52 +231,44 @@ const NotesAdmin = () => {
 
   const handleAddSubject = async (e) => {
     e.preventDefault();
+    
+    if (!newSubject.subject) {
+      setErrorMessage("Please enter a subject name.");
+      return;
+    }
+  
+    if (!semester) {
+      setErrorMessage("Please select a semester before adding a subject.");
+      return;
+    }
+  
     try {
-      const response = await axios.post(`${baseUrl}/api/subjects`, newSubject);
-      setSubjects([...subjects, response.data]); // Update subjects list
-      setNewSubject({
-        branch: newSubject.branch, // Set branch from the logged-in user
-        semester: semester, // Set semester from the selected state
-        subject: '', // Reset subject input
+      const response = await axios.post(`${baseUrl}/api/subjects`, {
+        branch: newSubject.branch,
+        semester: semester,  // <-- Ensure semester is included
+        subject: newSubject.subject,
       });
+  
+      setSubjects([...subjects, response.data]); // Update state with the new subject
+      setNewSubject({ branch: newSubject.branch, semester, subject: '' });
       setErrorMessage(""); // Clear error message
-      setIsAddSubjectVisible(true); // Show Add Subject form after adding subject
+      setIsAddSubjectVisible(true);
     } catch (error) {
       console.error("Error adding subject:", error);
       setErrorMessage("Failed to add subject. Please try again.");
     }
   };
+  
 
   return (
     <div className="note-container">
-      {!isLoggedIn ? (
-        <div className="login-page">
-          <h2 className="login-title">Login</h2>
-          <form onSubmit={handleLogin} className="login-form">
-            <input
-              type="email"
-              placeholder="Enter your email"
-              value={loginDetails.email}
-              onChange={(e) => setLoginDetails({ ...loginDetails, email: e.target.value })}
-              required
-            />
-            <input
-              type="password"
-              placeholder="Enter your password"
-              value={loginDetails.password}
-              onChange={(e) => setLoginDetails({ ...loginDetails, password: e.target.value })}
-              required
-            />
-            <button type="submit" className="login-btn">Login</button>
-            {errorMessage && <div className="error-message">{errorMessage}</div>}
-          </form>
-        </div>
-      ) : (
+      {(
         <div>
-          <div className="admin-panel">
-            <span className="admin-title">NOTES PAGE</span>
-            <button onClick={handleLogout} className="logout-btn">Logout</button>
-          </div>
+          <div className="note-admin-panel">
+  <span className="note-admin-title">NOTES PAGE</span>
+  {hodBranch && <span className="note-hod-branch">Branch: {hodBranch}</span>}
+</div>
+
 
           <div className="semester-container">
             <h2 className="semester-title">Select Semester</h2>

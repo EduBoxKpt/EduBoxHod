@@ -8,6 +8,7 @@
   height: 15%;
   position: relative; /* Ensure this is relative */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-bottom: 3px solid #ffcc00; 
 }
 
 /* Logo section */
@@ -134,4 +135,18 @@
   .header-nav {
     display: flex; /* Show regular nav links */
   }
+}
+
+.logout-button {
+  padding: 8px 16px;
+  background-color: #ff4d4f;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 16px;
+}
+
+.logout-button:hover {
+  background-color: #d9363e;
 }

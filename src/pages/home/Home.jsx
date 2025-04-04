@@ -26,10 +26,10 @@ const Home = () => {
           <h2 className="feature-heading">Best Platform to Learn Everything</h2>
           <div className="feature-boxes">
             <div className="feature-box">
-            <Link to="/notes">Notes</Link>
+            <Link to="/">Notes</Link>
             </div>
             <div className="feature-box">
-            <Link to="/questionpaper">Question Paper</Link>
+            <Link to="/">Question Paper</Link>
             </div>
             <div className="feature-box">
             <Link to="/">Lab</Link>
