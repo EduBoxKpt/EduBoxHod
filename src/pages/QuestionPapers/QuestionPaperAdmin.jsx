@@ -30,7 +30,7 @@ const QuestionPaperAdmin = () => {
     cie1: "",
     cie2: "",
     cie3: "",
-    see: "",
+  
   });
 
   const [hodBranch, setHodBranch] = useState("");
@@ -170,7 +170,7 @@ const QuestionPaperAdmin = () => {
         cie1: "",
         cie2: "",
         cie3: "",
-        see: "",
+       
       });
       setIsFormValidated(false);
 
@@ -260,7 +260,7 @@ const QuestionPaperAdmin = () => {
                 <th className="qp-table__heading">CIE 1</th>
                 <th className="qp-table__heading">CIE 2</th>
                 <th className="qp-table__heading">CIE 3</th>
-                <th className="qp-table__heading">SEE</th>
+                
                 <th className="qp-table__heading">Actions</th>
               </tr>
             </thead>
@@ -285,11 +285,7 @@ const QuestionPaperAdmin = () => {
                         View
                       </a>
                     </td>
-                    <td className="qp-table__data">
-                      <a href={qp.see} target="_blank" rel="noopener noreferrer">
-                        View
-                      </a>
-                    </td>
+                    
                     <td className="qp-table__data">
                       <button
                         className="qp-table__delete-btn"
@@ -374,20 +370,7 @@ const QuestionPaperAdmin = () => {
           </div>
 
 
-          {/* SEE File Upload */}
-          <br></br>
-          <div className="qp-file-row">
-            <label>SEE File</label>
-            <input
-              type="file"
-              ref={(el) => (fileInputs.current.see = el)}
-
-              accept="application/pdf"
-              onChange={(e) => handleFileUpload(e, 'see')} // Pass the identifier 'see'
-              className="qp-add-input"
-              required
-            />
-          </div>
+          
 
 
           {/* Submit Button */}
