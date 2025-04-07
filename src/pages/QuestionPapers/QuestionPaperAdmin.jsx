@@ -187,16 +187,31 @@ const QuestionPaperAdmin = () => {
   // Dependencies ensure real-time updates
 
 
-  const handleDeleteQuestionPaper = async (id) => {
-    try {
-      await axios.delete(`${baseUrl}/api/questionpapers/${id}`);
-      setQuestionPapers(questionPapers.filter((qp) => qp.id !== id));
+  // const handleDeleteQuestionPaper = async (id) => {
+  //   try {
+  //     await axios.delete(`${baseUrl}/api/questionpapers/${id}`);
+  //     setQuestionPapers(questionPapers.filter((qp) => qp.id !== id));
+  //     alert("Question paper deleted successfully!");
+  //   } catch (error) {
+  //     console.error("Error deleting question paper:", error);
+  //     setErrorMessage("Failed to delete question paper. Please try again.");
+  //   }
+  // };
+
+  try {
+    // Call API to delete the question paper by its ID
+    const response = await axios.delete(`${baseUrl}/api/questionpapers/${id}`);
+    
+    if (response.status === 200) {
+      // Update the state by filtering out the deleted question paper
+      setQuestionPapers((prevPapers) => prevPapers.filter((qp) => qp.id !== id));
       alert("Question paper deleted successfully!");
-    } catch (error) {
-      console.error("Error deleting question paper:", error);
-      setErrorMessage("Failed to delete question paper. Please try again.");
     }
-  };
+  } catch (error) {
+    console.error("Error deleting question paper:", error);
+    setErrorMessage("Failed to delete question paper. Please try again.");
+  }
+};
 
 
 
