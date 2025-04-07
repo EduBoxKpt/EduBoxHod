@@ -48,7 +48,7 @@ const QuestionPaperAdmin = () => {
   const [isFormValidated, setIsFormValidated] = useState(false);
 
   useEffect(() => {
-    const allFilesUploaded = newQuestionPaper.cie1 && newQuestionPaper.cie2 && newQuestionPaper.cie3 && newQuestionPaper.see;
+    const allFilesUploaded = newQuestionPaper.cie1 && newQuestionPaper.cie2 && newQuestionPaper.cie3
     const subjectGiven = newQuestionPaper.subjectName.trim() !== "";
 
     setIsFormValidated(allFilesUploaded && subjectGiven);
