@@ -184,6 +184,23 @@ const QuestionPaperAdmin = () => {
       setErrorMessage("Failed to add question paper. Please try again.");
     }
   };
+
+  // Define the async deletion function
+const handleDeleteQuestionPaper = async (id) => {
+  try {
+    const response = await axios.delete(`${baseUrl}/api/questionpapers/${id}`);
+    
+    if (response.status === 200) {
+      // Update the state by filtering out the deleted question paper
+      setQuestionPapers((prevPapers) => prevPapers.filter((qp) => qp.id !== id));
+      alert("Question paper deleted successfully!");
+    }
+  } catch (error) {
+    console.error("Error deleting question paper:", error);
+    setErrorMessage("Failed to delete question paper. Please try again.");
+  }
+};
+
   // Dependencies ensure real-time updates
 
 
@@ -198,20 +215,20 @@ const QuestionPaperAdmin = () => {
   //   }
   // };
 
-  try {
-    // Call API to delete the question paper by its ID
-    const response = await axios.delete(`${baseUrl}/api/questionpapers/${id}`);
+  // try {
+  //   // Call API to delete the question paper by its ID
+  //   const response = await axios.delete(`${baseUrl}/api/questionpapers/${id}`);
     
-    if (response.status === 200) {
-      // Update the state by filtering out the deleted question paper
-      setQuestionPapers((prevPapers) => prevPapers.filter((qp) => qp.id !== id));
-      alert("Question paper deleted successfully!");
-    }
-  } catch (error) {
-    console.error("Error deleting question paper:", error);
-    setErrorMessage("Failed to delete question paper. Please try again.");
-  }
-};
+  //   if (response.status === 200) {
+  //     // Update the state by filtering out the deleted question paper
+  //     setQuestionPapers((prevPapers) => prevPapers.filter((qp) => qp.id !== id));
+  //     alert("Question paper deleted successfully!");
+  //   }
+  // } catch (error) {
+  //   console.error("Error deleting question paper:", error);
+  //   setErrorMessage("Failed to delete question paper. Please try again.");
+  // }
+
 
 
 
