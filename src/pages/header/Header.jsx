@@ -55,7 +55,7 @@ const Header = ({ isHodLoggedIn, setIsHodLoggedIn }) => {
             
 <Link to="/about" className="header-nav-link" onClick={closeMenu}>About</Link>
 
-{/* <Link to="/admin" className="header-nav-link" onClick={closeMenu}>Admin Page</Link> */}
+<Link to="/admin" className="header-nav-link" onClick={closeMenu}>Admin Page</Link>
 <Link to="/contact" className="header-nav-link" onClick={closeMenu}>Contact Us</Link> 
             <button className="logout-button" onClick={handleLogout}>
               Logout
