@@ -228,113 +228,121 @@ const NotesAdmin = () => {
         <div className="subjects-container">
           <h2 className="subjects-title">Available Subjects</h2>
           <table className="subjects-table">
-            
-            <tbody>
-              {subjects.map((subject) => (
-                <React.Fragment key={subject.id}>
-                  <tr className="subject-row">
-                    <td>{subject.subject}</td>
-                    <td>
-                      <button
-                        onClick={() => handleMoreClick(subject)}
-                        className="subject-more-btn"
-                      >
-                        More
-                      </button>
-                      <button
-                        onClick={() => deleteSubject(subject.id)}
-                        className="noteslogin-delete-unit-btn"
-                      >
-                        Delete
-                      </button>
-                    </td>
-                  </tr>
+  <tbody>
+    {subjects.length > 0 ? (
+      subjects.map((subject) => (
+        <React.Fragment key={subject.id}>
+          <tr className="subject-row">
+            <td>{subject.subject}</td>
+            <td>
+              <button
+                onClick={() => handleMoreClick(subject)}
+                className="subject-more-btn"
+              >
+                More
+              </button>
+              <button
+                onClick={() => deleteSubject(subject.id)}
+                className="noteslogin-delete-unit-btn"
+              >
+                Delete
+              </button>
+            </td>
+          </tr>
 
-                  {selectedSubject === subject && dropdownVisible && (
-                    <tr>
-                      <td colSpan="2">
-                        <div className="module-dropdown">
-                          <h3>Study Material for {subject.subject}</h3>
-                          <table className="module-table">
-                            <thead>
-                              <tr>
-                                <th>Number</th>
-                                <th>Name</th>
-                                <th>PDF Link</th>
-                                <th>Actions</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {modules.length > 0 ? (
-                                modules.map((module, index) => (
-                                  <tr key={index}>
-                                    <td>{module.moduleNo}</td>
-                                    <td>{module.moduleName}</td>
-                                    <td>
-                                      <a
-                                        href={module.pdfLink}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                      >
-                                        View PDF
-                                      </a>
-                                    </td>
-                                    <td>
-                                      <button
-                                        onClick={() => deleteUnit(module.id)}
-                                        className="noteslogin-delete-unit-btn"
-                                      >
-                                        Delete
-                                      </button>
-                                    </td>
-                                  </tr>
-                                ))
-                              ) : (
-                                <tr>
-                                  <td colSpan="4">No modules found</td>
-                                </tr>
-                              )}
-                            </tbody>
-                          </table>
+          {selectedSubject === subject && dropdownVisible && (
+            <tr>
+              <td colSpan="2">
+                <div className="module-dropdown">
+                  <h3>Study Material for {subject.subject}</h3>
+                  <table className="module-table">
+                    <thead>
+                      <tr>
+                        <th>Number</th>
+                        <th>Name</th>
+                        <th>PDF Link</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {modules.length > 0 ? (
+                        modules.map((module, index) => (
+                          <tr key={index}>
+                            <td>{module.moduleNo}</td>
+                            <td>{module.moduleName}</td>
+                            <td>
+                              <a
+                                href={module.pdfLink}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >
+                                View PDF
+                              </a>
+                            </td>
+                            <td>
+                              <button
+                                onClick={() => deleteUnit(module.id)}
+                                className="noteslogin-delete-unit-btn"
+                              >
+                                Delete
+                              </button>
+                            </td>
+                          </tr>
+                        ))
+                      ) : (
+                        <tr>
+                          <td colSpan="4">No modules found</td>
+                        </tr>
+                      )}
+                    </tbody>
+                  </table>
 
-                          <div className="add-unit-form">
-                            <h4>Add New Unit</h4>
-                            <input
-                              type="text"
-                              placeholder="Module No"
-                              value={moduleNo}
-                              onChange={(e) => setModuleNo(e.target.value)}
-                            />
-                            <input
-                              type="text"
-                              placeholder="Module Name"
-                              value={moduleName}
-                              onChange={(e) => setModuleName(e.target.value)}
-                            />
-                            <input
-                              type="file"
-                              accept="application/pdf"
-                              onChange={handlePdfUpload}
-                              required
-                            />
-                            {selectedFile && <p>Selected File: {selectedFile.name}</p>}
-                            <button
-                              onClick={addUnit}
-                              className="add-unit-btn"
-                              disabled={!isPdfUploaded || !moduleNo || !moduleName || isUploading}
-                            >
-                              {isUploading ? "Uploading..." : "Add Unit"}
-                            </button>
-                            {errorMessage && <p className="error-message">{errorMessage}</p>}
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-                  )}
-                </React.Fragment>
-              ))}
-            </tbody>
-          </table>
+                  <div className="add-unit-form">
+                    <h4>Add New Unit</h4>
+                    <input
+                      type="text"
+                      placeholder="Module No"
+                      value={moduleNo}
+                      onChange={(e) => setModuleNo(e.target.value)}
+                    />
+                    <input
+                      type="text"
+                      placeholder="Module Name"
+                      value={moduleName}
+                      onChange={(e) => setModuleName(e.target.value)}
+                    />
+                    <input
+                      type="file"
+                      accept="application/pdf"
+                      onChange={handlePdfUpload}
+                      required
+                    />
+                    {selectedFile && <p>Selected File: {selectedFile.name}</p>}
+                    <button
+                      onClick={addUnit}
+                      className="add-unit-btn"
+                      disabled={!isPdfUploaded || !moduleNo || !moduleName || isUploading}
+                    >
+                      {isUploading ? "Uploading..." : "Add Unit"}
+                    </button>
+                    {errorMessage && <p className="error-message">{errorMessage}</p>}
+                  </div>
+                </div>
+              </td>
+            </tr>
+          )}
+        </React.Fragment>
+      ))
+    ) : (
+      <tr>
+        <td colSpan="2">
+          <div>No subjects available</div>
+        </td>
+      </tr>
+    )}
+  </tbody>
+</table>
+
         </div>
       )}
 
