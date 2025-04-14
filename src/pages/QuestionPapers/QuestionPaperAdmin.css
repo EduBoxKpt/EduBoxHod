@@ -393,3 +393,7 @@
     display: block;
   }
   
+  .qp-table__delete-btn{
+    background-color: #e74a3b;
+  color: white; 
+  }

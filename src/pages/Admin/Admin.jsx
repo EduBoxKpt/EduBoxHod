@@ -61,13 +61,13 @@ const Admin = () => {
         <select name="branch" value={hodDetails.branch} onChange={handleChange} required>
           <option value="">Select Branch</option>
           <option value="CS">CS</option>
-          <option value="EC">EC</option>
+          {/* <option value="EC">EC</option>
           <option value="ME">ME</option>
           <option value="CE">CE</option>
           <option value="AT">AT</option>
           <option value="CH">CH</option>
           <option value="EEE">EEE</option>
-          <option value="PO">PO</option>
+          <option value="PO">PO</option> */}
         </select>
 
         <label>Password:</label>

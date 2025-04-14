@@ -7,10 +7,10 @@
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   text-align: center;
   width: 400px;
-  margin: 20px auto; /* Centers the panel horizontally */
+  margin: 20px auto;
   display: flex;
   flex-direction: column;
-  align-items: center; /* Centers content inside */
+  align-items: center;
 }
 
 .note-admin-title {
@@ -19,13 +19,13 @@
   display: block;
   margin-bottom: 10px;
 }
+
 .note-hod-branch {
   font-size: 18px;
   display: block;
 }
-.note-container {
-  
 
+.note-container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -37,6 +37,7 @@
   color: #fff;
   position: relative;
 }
+
 .branch-title,
 .semester-title {
   font-size: 1.8rem;
@@ -44,6 +45,7 @@
   color: #ffcc00;
   margin-bottom: 10px;
 }
+
 .branch-buttons,
 .semester-buttons {
   display: flex;
@@ -52,6 +54,7 @@
   justify-content: center;
   margin-bottom: 20px;
 }
+
 .branch-button,
 .semester-button {
   padding: 10px 20px;
@@ -65,6 +68,7 @@
   transition: background-color 0.3s, transform 0.2s;
   margin: 5px;
 }
+
 .branch-button:hover,
 .semester-button:hover,
 .show-subjects-btn:hover {
@@ -72,16 +76,19 @@
   color: #333;
   transform: scale(1.05);
 }
+
 .branch-button.selected,
 .semester-button.selected {
   background-color: #f5deb3;
   color: #000;
 }
+
 .error-message {
   color: red;
   font-weight: bold;
   margin-top: 10px;
 }
+
 .subjects-container {
   width: 100%;
   padding: 20px;
@@ -90,67 +97,123 @@
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
+
 .subjects-title {
   font-size: 1.8rem;
   font-weight: bold;
   margin-bottom: 15px;
   color: #ffcc00;
 }
+
 .subject-item {
   padding: 10px;
   background-color: #444;
   margin: 10px 0;
   border-radius: 5px;
+  
 }
+
 .subject-item .subject-header {
   display: flex;
   justify-content: space-between;
   font-size: 1.1rem;
   font-weight: bold;
-}
-.subject-more-btn {
   
-  margin: 10px 450px;
-  padding: 5px 10px;
-  background-color: #ffcc00;
-  color: #333;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s;
 }
+
+
+
 .subject-more-btn:hover {
   background-color: #f5deb3;
 }
+
 .module-dropdown {
   margin-top: 10px;
   background-color: #444;
   padding: 10px;
   border-radius: 5px;
 }
+
+/* Updated full module-table styling */
 .module-table {
   width: 100%;
   border-collapse: collapse;
-}
-.module-table th,
-.module-table td {
-  padding: 8px;
-  border: 1px solid #ddd;
-}
-.module-table th {
+  margin-top: 15px;
   background-color: #333;
   color: #ffcc00;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 }
+
+.module-table th,
+.module-table td {
+  padding: 12px 16px;
+  border: 1px solid #000000;
+  text-align: left;
+}
+
+.module-table th {
+  background-color: #222;
+  color: #ffcc00;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 14px;
+}
+
 .module-table td {
   background-color: #444;
+  color: #fff;
+  font-size: 14px;
 }
+
 .module-table td a {
   color: #ffcc00;
+  font-weight: bold;
   text-decoration: none;
 }
+
 .module-table td a:hover {
   text-decoration: underline;
+  color: #fff000;
 }
+
+/* Responsive Table */
+@media (max-width: 600px) {
+  .module-table,
+  .module-table thead,
+  .module-table tbody,
+  .module-table th,
+  .module-table td,
+  .module-table tr {
+    display: block;
+    width: 100%;
+  }
+
+  .module-table tr {
+    margin-bottom: 15px;
+    border-bottom: 2px solid #ffcc00;
+  }
+
+  .module-table td {
+    padding-left: 50%;
+    position: relative;
+  }
+
+  .module-table td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 15px;
+    top: 10px;
+    font-weight: bold;
+    color: #ffcc00;
+  }
+
+  .module-table th {
+    display: none;
+  }
+}
+
 .login-button {
   text-decoration: none;
   padding: 10px 20px;
@@ -167,10 +230,12 @@
   margin-bottom: 20px;
   transition: background-color 0.3s, transform 0.2s;
 }
+
 .login-button:hover {
   background-color: #5eff00;
   color: #333;
 }
+
 .notes-heading {
   text-align: center;
   font-size: 2.5rem;
@@ -179,6 +244,7 @@
   text-transform: uppercase;
   font-weight: bold;
 }
+
 .show-subjects-btn {
   display: block;
   margin: 0 auto;
@@ -198,7 +264,7 @@
   font-size: 1rem;
   font-weight: bold;
   color: #fff;
-  background-color: #d9534f; /* Red color */
+  background-color: #d9534f;
   border: 2px solid #ff0000;
   border-radius: 8px;
   cursor: pointer;
@@ -211,8 +277,6 @@
   color: #000;
   transform: scale(1.05);
 }
-
-
 
 .add-subject-form {
   background: linear-gradient(to right, #7e7e7e, #303030);
@@ -266,7 +330,6 @@
   color: #fff;
 }
 
-
 .add-unit-form h4 {
   color: #fff;
   margin-right: 15px;
@@ -308,8 +371,6 @@
 }
 
 .add-unit-btn {
-  
-
   font-size: 16px;
   font-weight: bold;
   border: none;
@@ -320,3 +381,68 @@
   white-space: nowrap;
 }
 
+
+
+.subjects-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background-color: #000000;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.subjects-table th,
+.subjects-table td {
+  padding: 12px;
+  
+  border: 2px solid #ffcc00;
+}
+
+.subjects-table th {  
+  background-color: #333;
+  color: #4e73df;
+  font-weight: bold;
+  
+}
+
+.subjects-table td {
+  background-color: #444;
+  
+}
+
+
+.subject-row:hover {
+  background-color: #f1f3f8;
+}
+
+.subject-more-btn {
+  background-color: #4e73df;
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  margin: 10px 450px;
+}
+
+
+
+.subject-more-btn:hover {
+  background-color: #375a8c;
+}
+
+.noteslogin-delete-unit-btn {
+  background-color: #e74a3b;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  margin-left: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.noteslogin-delete-unit-btn:hover {
+  background-color: #c0392b;
+}
