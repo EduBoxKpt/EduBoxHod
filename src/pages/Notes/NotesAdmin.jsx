@@ -298,7 +298,7 @@ const NotesAdmin = () => {
                   </table>
 
                   <div className="add-unit-form">
-                    <h4>Add New Unit</h4>
+                    <h4>Add New Module</h4>
                     <input
                       type="text"
                       placeholder="Module No"
